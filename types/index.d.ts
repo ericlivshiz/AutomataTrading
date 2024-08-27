@@ -70,7 +70,7 @@ declare type SearchParamProps = {
     currentUserType: UserType;
   };
   
-  declare type AddDocumentBtnProps = {
+  declare type AddWorkflowBtnProps = {
     userId: string;
     email: string;
   };
