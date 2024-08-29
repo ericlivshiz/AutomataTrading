@@ -22,6 +22,8 @@ const AddWorkflowBtn = ({ userId, email }: AddWorkflowBtnProps) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const youre = "you're";
+
     const router = useRouter();
 
     const addWorkflowHandler = async () => {
@@ -68,7 +70,7 @@ const AddWorkflowBtn = ({ userId, email }: AddWorkflowBtnProps) => {
                     />
                     <DialogTitle>New Workflow</DialogTitle>
                     <DialogDescription>
-                        Choose which type of market you would like to trade on. Click save when you're done.
+                        Choose which type of market you would like to trade on. Click save when {youre} done.
                     </DialogDescription>
                 </DialogHeader>
                 <ComboboxDemo />
