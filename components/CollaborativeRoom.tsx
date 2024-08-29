@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Input } from "./ui/input";
 import { updateWorkflow } from "@/lib/actions/room.actions";
 import ShareModal from "./ShareModal";
+import Flow from "./workflow/Flow";
 
 const CollaborativeRoom = ({ roomId, roomMetadata, users, currentUserType}: CollaborativeRoomProps) => {
 
@@ -117,7 +118,7 @@ const CollaborativeRoom = ({ roomId, roomMetadata, users, currentUserType}: Coll
                             </SignedIn>
                         </div>
                     </Header>
-                    {/* YOU SHOULD BE LOADING WORKFLOW HERE with roomId={roomId} curentUserType={currentUserType}*/}
+                    <Flow />
                 </div>
             </ClientSideSuspense>
         </RoomProvider>
