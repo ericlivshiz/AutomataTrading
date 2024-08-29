@@ -1,7 +1,7 @@
 import {withSentryConfig} from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    typescipt: {
+    typescript: {
         ignoreBuildErrors: true,
     },
     images: {
