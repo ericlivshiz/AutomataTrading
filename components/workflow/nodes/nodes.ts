@@ -1,29 +1,36 @@
 import type { BuiltInNode, Node, NodeTypes } from "@xyflow/react";
-import PositionLoggerNode, {
-  type PositionLoggerNode as PositionLoggerNodeType,
-} from "./PositionLoggerNode";
+import TriggerNode, { type TriggerNode as TriggerNodeType} from "./TriggerNode";
+import ActionNode, { type ActionNode as ActionNodeType } from "./ActionNode";
+import ConditionNode, {type ConditionNode as ConditionNodeType} from "./ConditionNode";
 
+// Assuming you have already set up TriggerNode and other nodes
 export const initialNodes = [
-  { id: "a", type: "input", position: { x: 0, y: 0 }, data: { label: "Start" } },
+  {
+    id: "a",
+    type: "trigger-node",
+    position: { x: 0, y: -200 },
+    data: { label: "Perform Trigger" },
+  },
   {
     id: "b",
-    type: "position-logger",
-    position: { x: 200, y: 200 },
-    data: { label: "drag me!" },
+    type: "condition-node",
+    position: {x: -10, y: 0},
+    data: {label: "Perform Condition"},
   },
-  { id: "c", position: { x: 0, y: 80 }, data: { label: "Still" } },
   {
-    id: "d",
-    type: "output",
-    position: { x: 0, y: 200 },
-    data: { label: "working on it :)" },
-  },
+    id: "c",
+    type: "action-node",
+    position: { x: 5, y: 200 },
+    data: { label: "Perform Action" },
+  }, 
 ] satisfies Node[];
 
 export const nodeTypes = {
-  "position-logger": PositionLoggerNode,
-  // Add any of your custom nodes here!
+  "trigger-node": TriggerNode,
+  "action-node": ActionNode,
+  "condition-node": ConditionNode,
+  // Add more custom nodes here if needed!
 } satisfies NodeTypes;
 
-// Append the types of you custom edges to the BuiltInNode type
-export type CustomNodeType = BuiltInNode | PositionLoggerNodeType;
+// Append the new custom node type to the BuiltInNode type
+export type CustomNodeType = BuiltInNode | TriggerNodeType | ActionNodeType | ConditionNodeType;

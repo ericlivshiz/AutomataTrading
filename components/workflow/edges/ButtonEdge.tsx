@@ -10,7 +10,6 @@ import {
 const buttonStyle = {
     width: 20,
     height: 20,
-    background: "#32a86f",
     border: "1px solid #fff",
     cursor: "pointer",
     borderRadius: "50%",
@@ -62,8 +61,8 @@ const buttonStyle = {
             }}
             className="nodrag nopan"
           >
-            <button style={buttonStyle} onClick={onEdgeClick}>
-              x
+            <button style={buttonStyle} onClick={onEdgeClick} className="gradient-blue">
+              +
             </button>
           </div>
         </EdgeLabelRenderer>
