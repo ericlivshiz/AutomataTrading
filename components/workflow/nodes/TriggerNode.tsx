@@ -28,6 +28,7 @@ export type TriggerNode = Node<TriggerNodeData>;
 
 export default function TriggerNode(data: NodeProps<TriggerNode>) {
   const [open, setOpen] = useState(false);
+  const youre = "you're";
 
   const handleSave = () => {
     // Load toast and save info to db
@@ -62,7 +63,7 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
             <DialogTitle>Trigger Menu</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Create your trigger event here. Click save when you're done.
+            Create your trigger event here. Click save when {youre} done.
             Still getting built!
           </DialogDescription>
           {/* This is where you should put the options for the menu */}

@@ -29,6 +29,7 @@ export type ActionNode = Node<ActionNodeData>;
 
 export default function ActionNode({ data }: NodeProps<ActionNode>) {
   const [open, setOpen] = useState(false);
+  const youre = "you're";
 
   const handleSave = () => {
     // Load toast, save info to db
@@ -65,7 +66,7 @@ export default function ActionNode({ data }: NodeProps<ActionNode>) {
             <DialogTitle>Action Menu</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Create the action the bot should do here. Click save when you're done. Still getting built!
+            Create the action the bot should do here. Click save when {youre} done. Still getting built!
           </DialogDescription>
           {/* This is where you should put the options for the menu */}
           <DialogFooter>

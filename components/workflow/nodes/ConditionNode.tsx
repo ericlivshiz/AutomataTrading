@@ -28,7 +28,8 @@ export type ConditionNode = Node<ConditionNodeData>;
 
 export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
   const [open, setOpen] = useState(false);
-
+  const youre = "you're";
+  
   const handleSave = () => {
     // Load the toast, save info to database
     setOpen(false);
@@ -65,7 +66,7 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
           </DialogHeader>
           <DialogDescription>
             Create your conditions here. You can add as many conditions as you wish, just click on the + button after selecting.
-            Click save when you're done.
+            Click save when {youre} done.
             Still getting built!
           </DialogDescription>
           {/* This is where you should put the options for the menu */}
