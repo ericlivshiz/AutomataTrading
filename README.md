@@ -50,8 +50,8 @@ Ensure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/automata-trading.git
-   cd automata-trading
+   git clone https://github.com/your-username/AutomataTrading.git
+   cd AutomataTrading
    ```
 
 2. **Install dependencies:**
