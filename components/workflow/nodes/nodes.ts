@@ -8,7 +8,7 @@ export const initialNodes = [
   {
     id: "a",
     type: "trigger-node",
-    position: { x: 0, y: -200 },
+    position: { x: 0, y: -175 },
     data: { label: "Perform Trigger" },
   },
   {
@@ -20,7 +20,7 @@ export const initialNodes = [
   {
     id: "c",
     type: "action-node",
-    position: { x: 5, y: 200 },
+    position: { x: 14, y: 175 },
     data: { label: "Perform Action" },
   }, 
 ] satisfies Node[];

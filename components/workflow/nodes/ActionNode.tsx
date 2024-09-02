@@ -1,11 +1,9 @@
-// ActionNode.tsx
 import type { Node, NodeProps } from "@xyflow/react";
 import { Handle, Position } from "@xyflow/react";
 import Image from "next/image";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -17,9 +15,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
-} from "@/components/ui/dialog"
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useState } from "react";
+import NodeMenu from "@/components/NodeMenu";
 
 export type ActionNodeData = {
   label?: string;
@@ -34,25 +33,31 @@ export default function ActionNode({ data }: NodeProps<ActionNode>) {
   const handleSave = () => {
     // Load toast, save info to db
     setOpen(false);
-  }
+  };
 
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Card className="p-2">
+          <Card>
             <CardHeader className="p-2">
               <CardTitle>
-                <div className="flex items-center border-2 border-black rounded-lg p-1 w-fit bg-slate-500">
-                  <Image
-                    src="/assets/images/action-runner.png"
-                    alt="Action Icon"
-                    width={15}
-                    height={15}
-                  />
-                  <p className="ml-1 hidden sm:block text-black text-xs font-medium">
-                    Action
-                  </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center border border-slate-200 rounded-lg px-2 py-1 w-fit bg-sky-600">
+                    <Image
+                      src="/assets/icons/run-action.svg"
+                      alt="Action Icon"
+                      width={17}
+                      height={17}
+                      className=""
+                    />
+                    <p className="ml-1 hidden sm:block text-black text-xs font-medium">
+                      Action
+                    </p>
+                  </div>
+                  <div className="">
+                    <NodeMenu setOpen={setOpen}/>
+                  </div>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -70,7 +75,9 @@ export default function ActionNode({ data }: NodeProps<ActionNode>) {
           </DialogDescription>
           {/* This is where you should put the options for the menu */}
           <DialogFooter>
-            <Button type="submit" className="gradient-blue" onClick={handleSave}>Save changes</Button>
+            <Button type="submit" className="gradient-blue" onClick={handleSave}>
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

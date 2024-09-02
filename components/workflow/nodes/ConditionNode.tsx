@@ -18,7 +18,9 @@ import {
   DialogTrigger,
   DialogFooter
 } from "@/components/ui/dialog"
+
 import { useState } from "react";
+import NodeMenu from "@/components/NodeMenu";
 
 export type ConditionNodeData = {
   label?: string;
@@ -29,7 +31,7 @@ export type ConditionNode = Node<ConditionNodeData>;
 export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
   const [open, setOpen] = useState(false);
   const youre = "you're";
-  
+
   const handleSave = () => {
     // Load the toast, save info to database
     setOpen(false);
@@ -42,17 +44,23 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
           <Card className="p-2">
             <CardHeader className="p-2">
               <CardTitle>
-                <div className="flex items-center border-2 border-black rounded-lg p-1 w-fit bg-slate-500">
-                  <Image
-                    src="/assets/images/split-rgb.png"
-                    alt="Action Icon"
-                    width={15}
-                    height={15}
-                  />
-                  <p className="ml-1 hidden sm:block text-black text-xs font-medium">
-                    Condition
-                  </p>
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center border border-slate-200 rounded-lg px-2 py-1 w-fit bg-sky-600">
+                    <Image
+                      src="/assets/icons/light-bulb-2.svg"
+                      alt="Action Icon"
+                      width={15}
+                      height={15}
+                    />
+                    <p className="ml-1 hidden sm:block text-black text-xs font-medium">
+                      Condition
+                    </p>
+                  </div>
+                  <div className="w-fit">
+                    <NodeMenu setOpen={setOpen} />
+                  </div>
                 </div>
+
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 text-10-regular">
@@ -65,11 +73,9 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
             <DialogTitle>Condition Menu</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Create your conditions here. You can add as many conditions as you wish, just click on the + button after selecting.
-            Click save when {youre} done.
+            Create your conditions here.Click save when {youre} done.
             Still getting built!
           </DialogDescription>
-          {/* This is where you should put the options for the menu */}
           <DialogFooter>
             <Button type="submit" className="gradient-blue" onClick={handleSave}>Save changes</Button>
           </DialogFooter>
