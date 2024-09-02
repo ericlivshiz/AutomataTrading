@@ -73,15 +73,6 @@ Ensure you have the following installed:
    SENTRY_AUTH_TOKEN=your_key
    ```
 
-4. **Initialize Firebase:**
-
-   ```bash
-   firebase init
-   ```
-
-   - Select Firestore and Hosting when prompted.
-   - Use the existing project option and select your Firebase project.
-
 5. **Run the development server:**
 
    ```bash
