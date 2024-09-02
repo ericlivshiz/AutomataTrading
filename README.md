@@ -1,6 +1,6 @@
 # Automata Trading
 
-Welcome to **Automata Trading**, a web-based platform that empowers users to create, test, and share automated trading bots without any coding skills. Whether you're a seasoned trader or just starting out, Automata Trading is designed to make algorithmic trading accessible to everyone. Automata Trading has just started getting built.
+Welcome to **Automata Trading**, a web-based platform that empowers users to create, test, share, and sell automated trading bots without any coding skills. Whether you're a seasoned trader or just starting out, Automata Trading is designed to make algorithmic trading accessible to everyone. Automata Trading has just started getting built.
 
 ## 🚀 Project Overview
 
