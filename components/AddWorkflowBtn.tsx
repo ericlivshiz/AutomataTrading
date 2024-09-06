@@ -16,11 +16,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ComboboxDemo } from './ComboBoxType';
+import { MarketTypeList } from './MarketTypeList';
+
 
 const AddWorkflowBtn = ({ userId, email }: AddWorkflowBtnProps) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [marketType, setMarketType] = React.useState("");
+
 
     const youre = "you're";
 
@@ -73,10 +76,10 @@ const AddWorkflowBtn = ({ userId, email }: AddWorkflowBtnProps) => {
                         Choose which type of market you would like to trade on. Click save when {youre} done.
                     </DialogDescription>
                 </DialogHeader>
-                <ComboboxDemo />
+                    <MarketTypeList marketType={marketType} setMarketType={setMarketType} />
                 <DialogFooter>
-                    <Button type="submit" className="gradient-blue flex gap-1 shadow-md" onClick={addWorkflowHandler} disabled= {loading}>
-                    {loading? 'Saving...' : 'Save changes'}</Button>
+                    <Button type="submit" className="gradient-blue flex gap-1 shadow-md" onClick={addWorkflowHandler} disabled={loading}>
+                        {loading ? 'Saving...' : 'Save changes'}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

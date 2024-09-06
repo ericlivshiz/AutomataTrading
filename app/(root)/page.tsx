@@ -11,11 +11,17 @@ import Workflow from './workflows/[id]/page'
 import { dateConverter } from '@/lib/utils'
 import { DeleteModal } from '@/components/DeleteModal'
 import Notifications from '@/components/Notifications'
+import { MarketTypeProvider } from '@/context/MarketType'
+import LandingPage from '@/components/landing-page/Page'
 
 
 const Home = async () => {
+  // Instead of redirecting to sign in redirect to landing page.
   const clerkUser = await currentUser();
-  if (!clerkUser) redirect('/sign-in');
+  // if (!clerkUser) redirect('/sign-in');
+  if (!clerkUser) {
+    return <LandingPage />
+  }
 
   const roomWorkflows = await getWorkflows(clerkUser.emailAddresses[0].emailAddress);
 
@@ -56,7 +62,7 @@ const Home = async () => {
                     <p className="text-sm font-light text-blue-100">Created about {dateConverter(createdAt)}</p>
                   </div>
                 </Link>
-                <DeleteModal roomId={id}/>
+                <DeleteModal roomId={id} />
               </li>
             ))}
           </ul>
@@ -70,14 +76,14 @@ const Home = async () => {
             height={50}
             className="mx-auto"
           />
-
-          <AddWorkflowBtn
-            userId={clerkUser.id}
-            email={clerkUser.emailAddresses[0].emailAddress}
-          />
+          <MarketTypeProvider>
+            <AddWorkflowBtn
+              userId={clerkUser.id}
+              email={clerkUser.emailAddresses[0].emailAddress}
+            />
+          </MarketTypeProvider>
         </div>
       )}
-
     </main>
   )
 }

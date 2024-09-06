@@ -21,16 +21,40 @@ import {
 
 const frameworks = [
   {
-    value: "Stock Trading",
-    label: "Stock Trading",
+    value: "APPL",
+    label: "APPL",
   },
   {
-    value: "Crytpo Trading",
-    label: "Crytpo Trading",
+    value: "MSFT",
+    label: "MSFT",
+  },
+  {
+    value: "NVDA",
+    label: "NVDA",
+  },
+  {
+    value: "GOOGL",
+    label: "GOOGL",
+  },
+  {
+    value: "AMZN",
+    label: "AMZN",
+  },
+  {
+    value: "META",
+    label: "META",
+  },
+  {
+    value: "BRK.B",
+    label: "BRK.B",
+  },
+  {
+    value: "LLY",
+    label: "LLY",
   },
 ]
 
-export function ComboboxDemo() {
+export function StockTypeSelect() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -41,19 +65,19 @@ export function ComboboxDemo() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full gradient-red border-none"
+          className="w-[200px] gradient-blue justify-between"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            : "Select Stock"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <Command className="">
-          <CommandInput placeholder="Search Types..." />
+        <Command>
+          <CommandInput placeholder="Search Stocks..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No stock found with that name.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
                 <CommandItem

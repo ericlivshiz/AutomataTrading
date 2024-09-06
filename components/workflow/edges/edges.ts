@@ -3,9 +3,8 @@ import type { BuiltInEdge, Edge, EdgeTypes } from "@xyflow/react";
 import ButtonEdge, { type ButtonEdge as ButtonEdgeType } from "./ButtonEdge";
 
 export const initialEdges = [
-  { id: "a->c", source: "a", target: "c", animated: true },
-  { id: "b->d", source: "b", target: "d", type: "button-edge" },
-  { id: "c->d", source: "c", target: "d",  type: 'button-edge'},
+  { id: "a->b", source: "a", target: "b", animated: true, type: "button-edge" },
+  { id: "b->c", source: "b", target: "c", animated: true, type: "button-edge" },
 ] satisfies Edge[];
 
 export const edgeTypes = {

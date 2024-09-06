@@ -1,18 +1,31 @@
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 
+import { LiveList, LiveObject } from "@liveblocks/client";
+
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.
     Presence: {
       // Example, real-time cursor coordinates
-      // cursor: { x: number; y: number };
+      cursor: { x: number; y: number };
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
     Storage: {
-      
-    }
+      marketType: LiveObject<{
+        type: string;
+      }>;
+      nodes: LiveList<LiveObject<{
+        id: string;
+        position: { x: number; y: number };
+      }>>;
+      edges: LiveList<LiveObject<{
+        id: string;
+        source: string;
+        target: string;
+      }>>;
+    };
     // Custom user info set when authenticating with a secret key
     UserMeta: {
       id: string;

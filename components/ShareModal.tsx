@@ -3,14 +3,13 @@
 import { useSelf } from "@liveblocks/react/suspense"
 import React, { useState } from "react"
 import Image from "next/image"
-
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
+    DialogTrigger
 } from "@/components/ui/dialog"
 import { Button } from "./ui/button"
 import { Label } from "./ui/label"
@@ -31,7 +30,7 @@ const ShareModal = ({ roomId, collaborators, creatorId, currentUserType }: Share
     const shareWokflowHandler = async () => {
         setLoading(true);
 
-        await updateWorkflowAccess({roomId, email, userType: userType as UserType, updatedBy: user.info});
+        await updateWorkflowAccess({ roomId, email, userType: userType as UserType, updatedBy: user.info });
 
         setLoading(false);
     }
@@ -39,12 +38,12 @@ const ShareModal = ({ roomId, collaborators, creatorId, currentUserType }: Share
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
                 <Button className="gradient-blue flex h-9 gap-1 px-4" disabled={currentUserType !== 'editor'}>
-                    <Image 
-                      src="/assets/icons/share.svg"
-                      alt="share"
-                      width={20}
-                      height={20}
-                      className="min-w-4 md:size-5"
+                    <Image
+                        src="/assets/icons/share.svg"
+                        alt="share"
+                        width={20}
+                        height={20}
+                        className="min-w-4 md:size-5"
                     />
                     <p className="m4-1 hidden sm:block">
                         Share
@@ -58,42 +57,41 @@ const ShareModal = ({ roomId, collaborators, creatorId, currentUserType }: Share
                         Select which users can view and edit this workflow
                     </DialogDescription>
                 </DialogHeader>
-
                 <Label htmlFor="email" className="mt-6 text-blue-100">
-                    Email Adress
+                    Email Address
                 </Label>
                 <div className="flex items-center gap-3">
                     <div className="flex flex-1 rounded-md bg-dark-400">
-                        <Input 
-                          id = "email"
-                          placeholder="Enter email address"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="share-input"
+                        <Input
+                            id="email"
+                            placeholder="Enter email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="share-input"
                         />
-                        <UserTypeSelector 
-                          userType={userType}
-                          setUserType={setUserType}
+                        <UserTypeSelector
+                            userType={userType}
+                            setUserType={setUserType}
                         />
                     </div>
-                    <Button type="submit" onClick={shareWokflowHandler} className="gradient-blue flex h-full gap-1 px-5" disabled= {loading}>
-                        {loading? 'Sending...' : 'Invite'}
+                    <Button type="submit" onClick={shareWokflowHandler} className="gradient-blue flex h-full gap-1 px-5" disabled={loading}>
+                        {loading ? 'Sending...' : 'Invite'}
                     </Button>
                 </div>
 
                 <div className="my-2 space-y-2">
-                  <ul className="flex flex-col">
-                    {collaborators.map((collaborator) => (
-                        <Collaborator 
-                          key= {collaborator.id}
-                          roomId={roomId}
-                          creatorId={creatorId}
-                          email={collaborator.email}
-                          collaborator={collaborator}
-                          user={user.info}
-                        />
-                    ))}
-                  </ul>
+                    <ul className="flex flex-col">
+                        {collaborators.map((collaborator) => (
+                            <Collaborator
+                                key={collaborator.id}
+                                roomId={roomId}
+                                creatorId={creatorId}
+                                email={collaborator.email}
+                                collaborator={collaborator}
+                                user={user.info}
+                            />
+                        ))}
+                    </ul>
                 </div>
             </DialogContent>
         </Dialog>
