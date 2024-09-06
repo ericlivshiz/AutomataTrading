@@ -1,5 +1,5 @@
 import { Inter as FontSans } from "next/font/google"
-
+import {Analytics} from '@vercel/analytics/react'
 import { cn } from "@/lib/utils"
 import './globals.css'
 import { Metadata } from "next"
@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Provider>
             {children}
           </Provider> 
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
