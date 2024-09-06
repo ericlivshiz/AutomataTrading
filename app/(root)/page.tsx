@@ -12,11 +12,16 @@ import { dateConverter } from '@/lib/utils'
 import { DeleteModal } from '@/components/DeleteModal'
 import Notifications from '@/components/Notifications'
 import { MarketTypeProvider } from '@/context/MarketType'
+import LandingPage from '@/components/landing-page/Page'
 
 
 const Home = async () => {
+  // Instead of redirecting to sign in redirect to landing page.
   const clerkUser = await currentUser();
-  if (!clerkUser) redirect('/sign-in');
+  // if (!clerkUser) redirect('/sign-in');
+  if (!clerkUser) {
+    return <LandingPage />
+  }
 
   const roomWorkflows = await getWorkflows(clerkUser.emailAddresses[0].emailAddress);
 
@@ -79,7 +84,6 @@ const Home = async () => {
           </MarketTypeProvider>
         </div>
       )}
-
     </main>
   )
 }
