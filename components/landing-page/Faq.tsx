@@ -38,7 +38,7 @@ export const Faq = () => {
 const faqdata = [
   {
     question: "When will Automata Trading be released?",
-    answer: "Automata Trading is currently being built by one person. Ideally, anybody can use Automata Trading to create bots by the start of 2025.",
+    answer: "Ideally, a beta version of Automata Trading will be made by the start of 2025.",
   },
   {
     question: "How can I learn how to use the workflow editor?",

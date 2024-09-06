@@ -28,7 +28,7 @@ import {
       },
       {
         title: "Marketplace for Trading Bots",
-        desc: "This will be your last bullet point in this section.",
+        desc: "Buy & sell trading bots with a data-analysis report attached",
         icon: <CursorArrowRaysIcon />,
       },
     ],
