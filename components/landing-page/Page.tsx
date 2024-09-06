@@ -11,6 +11,7 @@ import { SectionTitle } from "./SectionTitle"
 import { BenefitOne, BenefitTwo } from "./data"
 
 export default function LandingPage() {
+    const wewill="we'll";
     return (
         <>
             <Header>
@@ -34,7 +35,7 @@ export default function LandingPage() {
                 <Benefits imgPos="right" data={BenefitTwo} />
 
                 <SectionTitle preTitle="FAQ" title="Frequently Asked Questions">
-                    When Automata Trading is set up, we'll take inquiries by mail. For now, here are some questions 
+                    When Automata Trading is set up, {wewill} take inquiries by mail. For now, here are some questions 
                     we commonly get.
                 </SectionTitle>
                 <Faq />

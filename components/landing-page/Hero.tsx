@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import Img from "./../../public/assets/images/trading-mayhem-image-2.jpg"
 
 export const Hero = () => {
+    const youre = "you're";
     return (
         <>
             <Container className="flex flex-wrap ">
@@ -13,7 +14,7 @@ export const Hero = () => {
                         </h1>
                         <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
                             A platform that empowers users to create, test, share, and sell automated trading bots without any coding skills!
-                            Whether you're a seasoned trader or just starting out, Automata Trading is designed to
+                            Whether {youre} a seasoned trader or just starting out, Automata Trading is designed to
                             make algorithmic trading accessible to everyone.
                         </p>
 
