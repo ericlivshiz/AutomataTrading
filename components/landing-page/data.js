@@ -18,7 +18,7 @@ import {
     bullets: [
       {
         title: "No-Code Workflow Editor",
-        desc: "Users can design and implement trading strategies without writing any code.",
+        desc: "Users can collaboratively design trading strategies without writing any code.",
         icon: <CodeBracketSquareIcon />,
       },
       {
