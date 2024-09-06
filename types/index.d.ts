@@ -74,6 +74,11 @@ declare type SearchParamProps = {
     userId: string;
     email: string;
   };
+
+  declare type WaitListDialogProps = {
+    isDialogOpen: boolean;
+    setIsDialogOpen: (isOpen: boolean) => void;
+  }
   
   declare type DeleteModalProps = { roomId: string };
   

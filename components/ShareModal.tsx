@@ -3,7 +3,6 @@
 import { useSelf } from "@liveblocks/react/suspense"
 import React, { useState } from "react"
 import Image from "next/image"
-
 import {
     Dialog,
     DialogContent,
@@ -59,7 +58,7 @@ const ShareModal = ({ roomId, collaborators, creatorId, currentUserType }: Share
                     </DialogDescription>
                 </DialogHeader>
                 <Label htmlFor="email" className="mt-6 text-blue-100">
-                    Email Adress
+                    Email Address
                 </Label>
                 <div className="flex items-center gap-3">
                     <div className="flex flex-1 rounded-md bg-dark-400">

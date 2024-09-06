@@ -5,6 +5,8 @@ import { Container } from "./Container";
 import VercelImg from "./../../public/assets/images/vercel.svg"
 import LogoImg from "./../../public/assets/images/logo.png"
 import { Button } from "../ui/button";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import WaitListModal from "./WaitListModal";
 
 export const Footer = () => {
   // If you actually have items you can make this as a normal array
@@ -33,7 +35,7 @@ export const Footer = () => {
             </div>
 
             <div className="max-w-lg mt-4 text-gray-500 dark:text-gray-400">
-              
+
             </div>
 
             <div className="mt-5">
@@ -81,9 +83,15 @@ export const Footer = () => {
           </div>
           <div className="">
             <div>
-              <Button className="bg-indigo-600">
-                Join Wait List
-              </Button>
+              <Dialog>
+                <DialogTrigger>
+                  <Button className="bg-indigo-600">
+                    Join Wait List
+                  </Button>
+                </DialogTrigger>
+                <WaitListModal />
+              </Dialog>
+
             </div>
             {/* <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
               <a
@@ -119,7 +127,7 @@ export const Footer = () => {
         </div>
 
         <div className="my-10 text-sm text-center text-gray-600 dark:text-gray-400">
-          Copyright © {new Date().getFullYear()}. Made with ♥ 
+          Copyright © {new Date().getFullYear()}. Made with ♥
         </div>
       </Container>
       {/* Do not remove this */}

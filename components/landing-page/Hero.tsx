@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { Container } from "./Container";
 import Img from "./../../public/assets/images/trading-mayhem-image-2.jpg"
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { useState } from "react";
+import WaitListModal from "./WaitListModal";
 
 export const Hero = () => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const youre = "you're";
     return (
         <>
@@ -17,15 +21,18 @@ export const Hero = () => {
                             Whether {youre} a seasoned trader or just starting out, Automata Trading is designed to
                             make algorithmic trading accessible to everyone.
                         </p>
-
                         <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-                            <a
-                                href="https://web3templates.com/templates/nextly-landing-page-template-for-startups"
-                                target="_blank"
-                                rel="noopener"
-                                className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md ">
-                                Join the Wait List
-                            </a>
+                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                                <DialogTrigger>
+                                    <a
+                                        target="_blank"
+                                        rel="noopener"
+                                        className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md ">
+                                        Join the Wait List
+                                    </a>
+                                </DialogTrigger>
+                                <WaitListModal/>
+                            </Dialog>
                             <a
                                 href="https://github.com/ericlivshiz/AutomataTrading"
                                 target="_blank"
