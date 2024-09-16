@@ -1,21 +1,13 @@
-'use client'
-
 import Image from "next/image";
 import { Container } from "./Container";
 import Img from "./../../public/assets/images/trading-mayhem-image-2.jpg"
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import WaitListModal from "./WaitListModal";
 
-export const Hero = () => {
+export const WaitListHero = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const router = useRouter();
     const youre = "you're";
-
-    const HandleStart = () => {
-        router.push('/sign-in');
-    }
-
     return (
         <>
             <Container className="flex flex-wrap ">
@@ -30,14 +22,17 @@ export const Hero = () => {
                             make algorithmic trading accessible to everyone.
                         </p>
                         <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-                            <a
-                                target="_blank"
-                                rel="noopener"
-                                onClick={HandleStart}
-                                className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md hover:cursor-pointer">
-                                Get Started
-
-                            </a>
+                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                                <DialogTrigger>
+                                    <a
+                                        target="_blank"
+                                        rel="noopener"
+                                        className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md ">
+                                        Join the Wait List
+                                    </a>
+                                </DialogTrigger>
+                                <WaitListModal/>
+                            </Dialog>
                             <a
                                 href="https://github.com/ericlivshiz/AutomataTrading"
                                 target="_blank"

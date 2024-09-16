@@ -6,13 +6,13 @@ import { Benefits } from "./Benefits"
 import { Container } from "./Container"
 import { Faq } from "./Faq"
 import { Footer } from "./Footer"
-import { Hero } from "./Hero"
+import { WaitListHero } from "./W-Hero"
 import { SectionTitle } from "./SectionTitle"
 import WaitListModal from "./WaitListModal"
 import { BenefitOne, BenefitTwo } from "./data"
 import { Dialog, DialogTrigger } from "../ui/dialog"
 
-export default function LandingPage() {
+export default function WaitlistLandingPage() {
     const wewill = "we'll";
     return (
         <>
@@ -30,7 +30,7 @@ export default function LandingPage() {
                 </div>
             </Header>
             <Container>
-                <Hero />
+                <WaitListHero />
                 <SectionTitle
                     preTitle="Automata Benefits"
                     title=" Why use Automata Trading?"

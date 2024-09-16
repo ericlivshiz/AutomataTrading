@@ -12,15 +12,31 @@ import { dateConverter } from '@/lib/utils'
 import { DeleteModal } from '@/components/DeleteModal'
 import Notifications from '@/components/Notifications'
 import { MarketTypeProvider } from '@/context/MarketType'
-import LandingPage from '@/components/landing-page/Page'
+import WaitlistLandingPage from '@/components/landing-page/WaitlistPage'
+import LandingPage from '@/components/landing-page/LandingPage'
 
+
+// DEVMODE 0 = WAIT LIST LANDING PAGE
+// DEVMODE 1 = REAL LANDING PAGE
+// DEVMODE 2 = NO LANDING PAGE
+const HOMEPAGEDEVMODE = 1;
 
 const Home = async () => {
   // Instead of redirecting to sign in redirect to landing page.
   const clerkUser = await currentUser();
   // if (!clerkUser) redirect('/sign-in');
   if (!clerkUser) {
-    return <LandingPage />
+    if (HOMEPAGEDEVMODE == 0)
+    {
+      return <WaitlistLandingPage />
+    }
+    if (HOMEPAGEDEVMODE == 1)
+    {
+      return <LandingPage/>
+    }
+    else {
+      redirect('/sign-in');
+    }
   }
 
   const roomWorkflows = await getWorkflows(clerkUser.emailAddresses[0].emailAddress);
