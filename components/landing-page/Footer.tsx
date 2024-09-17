@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Container } from "./Container";
 import VercelImg from "./../../public/assets/images/vercel.svg"
-import LogoImg from "./../../public/assets/images/logo.png"
+import LogoImg from "./../../public/assets/images/A-Letter-Logo.png"
 import { Button } from "../ui/button";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import WaitListModal from "./WaitListModal";

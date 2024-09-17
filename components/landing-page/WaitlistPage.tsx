@@ -11,24 +11,13 @@ import { SectionTitle } from "./SectionTitle"
 import WaitListModal from "./WaitListModal"
 import { BenefitOne, BenefitTwo } from "./data"
 import { Dialog, DialogTrigger } from "../ui/dialog"
+import { WaitlistNavbar } from "./W-Navbar"
 
 export default function WaitlistLandingPage() {
     const wewill = "we'll";
     return (
         <>
-            <Header>
-                <div className="flex items-center gap-2 lg:gap-4">
-                    <Dialog>
-                        <DialogTrigger>
-                            <Button className="bg-indigo-600">
-                                Join Wait List
-                            </Button>
-                        </DialogTrigger>
-                        <WaitListModal />
-                    </Dialog>
-
-                </div>
-            </Header>
+            <WaitlistNavbar />
             <Container>
                 <WaitListHero />
                 <SectionTitle
