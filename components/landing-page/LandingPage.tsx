@@ -8,6 +8,7 @@ import { SectionTitle } from "./SectionTitle";
 import { Benefits } from "./Benefits";
 import { Faq } from "./Faq";
 import { BenefitOne, BenefitTwo } from "./data";
+import { Footer } from "./Footer";
 
 const LandingPage = () => {
     const wewill = "we'll";
@@ -33,6 +34,7 @@ const LandingPage = () => {
                     we commonly get.
                 </SectionTitle>
                 <Faq />
+                <Footer />
             </Container>
         </>
     )
