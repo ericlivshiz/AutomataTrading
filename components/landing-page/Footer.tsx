@@ -3,15 +3,11 @@ import Image from "next/image";
 import React from "react";
 import { Container } from "./Container";
 import VercelImg from "./../../public/assets/images/vercel.svg"
-import LogoImg from "./../../public/assets/images/logo.png"
-import { Button } from "../ui/button";
-import { Dialog, DialogTrigger } from "../ui/dialog";
-import WaitListModal from "./WaitListModal";
 
-export const Footer = () => {
-  // If you actually have items you can make this as a normal array
-  const navigation: any[] = [];
-  const legal: any[] = [];
+
+export function Footer() {
+  const navigation = ["Learn", "Pricing", "About Us", "Contact"];
+  const legal = ["Terms", "Privacy", "Legal"];
   return (
     <div className="relative">
       <Container>
@@ -24,7 +20,7 @@ export const Footer = () => {
                 className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100"
               >
                 <Image
-                  src={LogoImg}
+                  src="/assets/images/A-Letter-Logo.png"
                   alt="N"
                   width="32"
                   height="32"
@@ -34,8 +30,8 @@ export const Footer = () => {
               </Link>
             </div>
 
-            <div className="max-w-lg mt-4 text-gray-500 dark:text-gray-400">
-
+            <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
+              Automata Trading is a web-platform meant to make automated trading accessible to everyone!
             </div>
 
             <div className="mt-5">
@@ -82,20 +78,10 @@ export const Footer = () => {
             </div>
           </div>
           <div className="">
-            <div>
-              <Dialog>
-                <DialogTrigger>
-                  <Button className="bg-indigo-600">
-                    Join Wait List
-                  </Button>
-                </DialogTrigger>
-                <WaitListModal />
-              </Dialog>
-
-            </div>
-            {/* <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
+            <div>Follow us</div>
+            <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
               <a
-                href="https://twitter.com/web3templates"
+                href="https://twitter.com/"
                 target="_blank"
                 rel="noopener"
               >
@@ -103,7 +89,7 @@ export const Footer = () => {
                 <Twitter />
               </a>
               <a
-                href="https://facebook.com/web3templates"
+                href="https://facebook.com/"
                 target="_blank"
                 rel="noopener"
               >
@@ -111,7 +97,7 @@ export const Footer = () => {
                 <Facebook />
               </a>
               <a
-                href="https://instagram.com/web3templates"
+                href="https://instagram.com/"
                 target="_blank"
                 rel="noopener"
               >
@@ -122,7 +108,7 @@ export const Footer = () => {
                 <span className="sr-only">Linkedin</span>
                 <Linkedin />
               </a>
-            </div> */}
+            </div>
           </div>
         </div>
 
@@ -131,7 +117,6 @@ export const Footer = () => {
         </div>
       </Container>
       {/* Do not remove this */}
-      <Backlink />
     </div>
   );
 }
@@ -185,29 +170,28 @@ const Linkedin = ({ size = 24 }) => (
 
 const Backlink = () => {
   return (
-    <div></div>
-    // <a
-    //   href="https://web3templates.com"
-    //   target="_blank"
-    //   rel="noopener"
-    //   className="absolute flex px-3 py-1 space-x-2 text-sm font-semibold text-gray-900 bg-white border border-gray-300 rounded shadow-sm place-items-center left-5 bottom-5 dark:bg-trueGray-900 dark:border-trueGray-700 dark:text-trueGray-300"
-    // >
-    //   <svg
-    //     width="20"
-    //     height="20"
-    //     viewBox="0 0 30 30"
-    //     fill="none"
-    //     className="w-4 h-4"
-    //     xmlns="http://www.w3.org/2000/svg"
-    //   >
-    //     <rect width="30" height="29.5385" rx="2.76923" fill="#362F78" />
-    //     <path
-    //       d="M10.14 21.94H12.24L15.44 12.18L18.64 21.94H20.74L24.88 8H22.64L19.58 18.68L16.36 8.78H14.52L11.32 18.68L8.24 8H6L10.14 21.94Z"
-    //       fill="#F7FAFC"
-    //     />
-    //   </svg>
+    <a
+      href="https://web3templates.com"
+      target="_blank"
+      rel="noopener"
+      className="absolute flex px-3 py-1 space-x-2 text-sm font-semibold text-gray-900 bg-white border border-gray-300 rounded shadow-sm place-items-center left-5 bottom-5 dark:bg-trueGray-900 dark:border-trueGray-700 dark:text-trueGray-300"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 30 30"
+        fill="none"
+        className="w-4 h-4"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="30" height="29.5385" rx="2.76923" fill="#362F78" />
+        <path
+          d="M10.14 21.94H12.24L15.44 12.18L18.64 21.94H20.74L24.88 8H22.64L19.58 18.68L16.36 8.78H14.52L11.32 18.68L8.24 8H6L10.14 21.94Z"
+          fill="#F7FAFC"
+        />
+      </svg>
 
-    //   <span>Web3Templates</span>
-    // </a>
+      <span>Web3Templates</span>
+    </a>
   );
 };

@@ -5,32 +5,21 @@ import { Button } from "../ui/button"
 import { Benefits } from "./Benefits"
 import { Container } from "./Container"
 import { Faq } from "./Faq"
-import { Footer } from "./Footer"
-import { Hero } from "./Hero"
+import { WaitlistFooter } from "./W-Footer"
+import { WaitListHero } from "./W-Hero"
 import { SectionTitle } from "./SectionTitle"
 import WaitListModal from "./WaitListModal"
 import { BenefitOne, BenefitTwo } from "./data"
 import { Dialog, DialogTrigger } from "../ui/dialog"
+import { WaitlistNavbar } from "./W-Navbar"
 
-export default function LandingPage() {
+export default function WaitlistLandingPage() {
     const wewill = "we'll";
     return (
         <>
-            <Header>
-                <div className="flex items-center gap-2 lg:gap-4">
-                    <Dialog>
-                        <DialogTrigger>
-                            <Button className="bg-indigo-600">
-                                Join Wait List
-                            </Button>
-                        </DialogTrigger>
-                        <WaitListModal />
-                    </Dialog>
-
-                </div>
-            </Header>
+            <WaitlistNavbar />
             <Container>
-                <Hero />
+                <WaitListHero />
                 <SectionTitle
                     preTitle="Automata Benefits"
                     title=" Why use Automata Trading?"
@@ -48,7 +37,7 @@ export default function LandingPage() {
                 </SectionTitle>
                 <Faq />
             </Container>
-            <Footer />
+            <WaitlistFooter />
         </>
     )
 }

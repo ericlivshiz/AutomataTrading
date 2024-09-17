@@ -37,12 +37,12 @@ export const Faq = () => {
 
 const faqdata = [
   {
-    question: "When will Automata Trading be released?",
-    answer: "Ideally, a beta version of Automata Trading will be made by the start of 2025.",
+    question: "How can I learn how to use Automata Trading?",
+    answer: "Please go to our learn section to check out our documentation.",
   },
   {
-    question: "How can I learn how to use the workflow editor?",
-    answer: "The goal for Automata Trading is to provide an intuitive workflow editor that wouldn't need documentation. However, we plan on releasing the full documentation for the workflow editor by the start of 2025.",
+    question: "How can I make my workflow collaborative?",
+    answer: "Collaborating with others on your workflow is simple, just click SHARE and input the users email! You can decide whether the user will have edit or view access.",
   },
   {
     question: "How can I join the team?",

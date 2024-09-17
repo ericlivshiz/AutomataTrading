@@ -15,7 +15,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: 'Automata Trading',
-  description: 'Your go-to automated trading bot builde'
+  description: 'Your go-to automated trading bot builder'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,6 +43,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </body>
       </html>
     </ClerkProvider>
-
   )
 }
