@@ -1,9 +1,14 @@
+import { Navbar } from "@/components/landing-page/Navbar";
 
 const AboutUs = () => {
     return (
+        <>
+        <Navbar />
         <div>
-            About Us
+            Not Built Yet!
         </div>
+        </>
+        
     )
 }
 

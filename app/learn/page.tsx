@@ -69,7 +69,7 @@ const Learn = () => {
                 </Disclosure>
 
                 {/* Main Content */}
-                <main className="flex-1 p-8 overflow-auto bg-gradient-to-b from-gray-800 via-gray-800 to-slate-900 min-h-screen">
+                <main className="flex-1 p-8 overflow-auto bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen">
                     <LearnWorkflow />
                     <LearnBacktest />
                     <LearnMarketPlace />
