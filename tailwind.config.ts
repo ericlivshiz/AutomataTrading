@@ -14,10 +14,14 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: '1.5rem', // Reduce the padding slightly to make it narrower
       screens: {
-        '2xl': '1400px',
         xs: '360px',
+        sm: '640px',
+        md: '768px',
+        lg: '960px', // Reduced from 1024px
+        xl: '1200px', // Reduced from 1280px
+        '2xl': '1320px', // Reduced from 1400px
       },
     },
     extend: {
