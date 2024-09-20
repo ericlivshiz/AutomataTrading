@@ -86,7 +86,7 @@ export const WaitlistFooter = () => {
               <Dialog>
                 <DialogTrigger>
                   <Button className="bg-indigo-600">
-                    Join Wait List
+                    Join Waitlist
                   </Button>
                 </DialogTrigger>
                 <WaitListModal />
