@@ -3,7 +3,7 @@ const LearnMarketPlace = () => {
         <section id="Marketplace">
             <h2 className="text-2xl font-semibold mb-4 text-indigo-500">Marketplace</h2>
             <div className="bg-gray-700 text-white p-6 rounded-lg shadow-lg mb-6">
-                    <h3 className="text-xl font-semibold mb-3 text-indigo-300">1. Sell Bot on Marketplace</h3>
+                    <h3 className="text-xl font-semibold mb-3">1. Sell Bot on Marketplace</h3>
                     <p className="mb-4 text-gray-300">
                        Something catchy, still needs to be planned and built.
                     </p>
