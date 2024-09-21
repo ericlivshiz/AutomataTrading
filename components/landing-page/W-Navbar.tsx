@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import WaitListModal from "./WaitListModal";
@@ -35,7 +35,7 @@ export const WaitlistNavbar = () => {
                 <a
                   target="_blank"
                   rel="noopener"
-                  className="px-6 py-3 text-white bg-indigo-600 rounded-md md:ml-5 ">
+                  className="px-6 py-3 text-white bg-indigo-600 rounded-md md:ml-5">
                   Join the Waitlist
                 </a>
               </DialogTrigger>
@@ -64,24 +64,29 @@ export const WaitlistNavbar = () => {
                   {!open && (
                     <path
                       fillRule="evenodd"
-                      d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                      d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
                     />
                   )}
                 </svg>
               </Disclosure.Button>
 
               <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
-                <>
-                  <Link href="/" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">
-                    Get Started
-                  </Link>
-                </>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger>
+                    <a
+                      target="_blank"
+                      rel="noopener"
+                      className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md">
+                      Join the Waitlist
+                    </a>
+                  </DialogTrigger>
+                  <WaitListModal />
+                </Dialog>
               </Disclosure.Panel>
             </>
           )}
         </Disclosure>
-
       </nav>
     </div>
   );
-}
+};
