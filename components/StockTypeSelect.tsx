@@ -54,9 +54,9 @@ const frameworks = [
   },
 ]
 
-export function StockTypeSelect() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+export function StockTypeSelect({ onSelect }: { onSelect: (stock: string) => void }) {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -84,8 +84,9 @@ export function StockTypeSelect() {
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                    setValue(currentValue === value ? "" : currentValue);
+                    onSelect(currentValue); // Notify parent about the selection
+                    setOpen(false);
                   }}
                 >
                   <Check
@@ -102,5 +103,5 @@ export function StockTypeSelect() {
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

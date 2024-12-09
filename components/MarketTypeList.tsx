@@ -40,7 +40,7 @@ export function MarketTypeList({marketType, setMarketType}: any) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full gradient-red border-none"
+          className="w-full gradient-blue border-none"
         >
           {marketType
             ? frameworks.find((framework) => framework.value === marketType)?.label
