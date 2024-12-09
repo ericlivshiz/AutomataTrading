@@ -1,4 +1,4 @@
-import {useContext, useState } from "react";
+import { useContext, useState } from "react";
 import type { Node, NodeProps } from "@xyflow/react";
 import { Handle, Position } from "@xyflow/react";
 import Image from "next/image";
@@ -17,15 +17,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
-} from "@/components/ui/dialog"
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 import NodeMenu from "@/components/NodeMenu";
 import { StockTypeSelect } from "@/components/StockTypeSelect";
@@ -38,14 +38,15 @@ export type TriggerNode = Node<TriggerNodeData>;
 
 export default function TriggerNode(data: NodeProps<TriggerNode>) {
   const [open, setOpen] = useState(false);
-  const youre = "you're";
-
-
-
+  const [stockName, setStockName] = useState("Select Stock"); // State to hold the stock name
+  const [triggerEvent, setTriggerEvent] = useState("Select Trigger"); // State to hold the trigger event
+  const [updateNode, setUpdateNode] = useState(false);
+  const your = "you're";
   const handleSave = () => {
-    // Load toast and save info to db
+    // Close the dialog after saving changes
     setOpen(false);
-  }
+    setUpdateNode(true);
+  };
 
   return (
     <div>
@@ -62,7 +63,9 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
                       width={15}
                       height={15}
                     />
-                    <p className="ml-1 hidden sm:block text-black text-xs font-medium" >Trigger</p>
+                    <p className="ml-1 hidden sm:block text-black text-xs font-medium">
+                      {stockName}
+                    </p>
                   </div>
                   <div className="w-fit">
                     <NodeMenu setOpen={setOpen} />
@@ -71,7 +74,16 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 text-10-regular">
-              <p>Select the event that starts your bot.</p>
+              {updateNode ? (
+                <div>
+                  <p>Stock: {stockName}</p>
+                  <p>Trigger at: {triggerEvent}</p>
+                </div>
+              ) : (
+                <div>
+                  <p>Create the trigger needed for this bot.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </DialogTrigger>
@@ -80,25 +92,40 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
             <DialogTitle>Trigger Menu</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Create your trigger event here. Click save when {youre} done.
-            Still getting built!
+            Create your trigger event here. Click save when {your} done.
           </DialogDescription>
-          <StockTypeSelect />
+          <StockTypeSelect
+            onSelect={(selectedStock) => setStockName(selectedStock)} // Pass the selected stock to update the state
+          />
           <Button className="flex items-center w-[200px] gradient-blue justify-between border">
             <p>Trigger at </p>
-            <Select>
+            <Select
+              onValueChange={(value) => setTriggerEvent(value)} // Update trigger event state
+            >
               <SelectTrigger className="shad-select">
-                <SelectValue />
+                <SelectValue placeholder="Select Trigger" />
               </SelectTrigger>
               <SelectContent className="border-none">
-                <SelectItem value="market-open" className="cursor-pointer">Market Open</SelectItem>
-                <SelectItem value="market-close" className="cursor-pointer">Market Close</SelectItem>
-                <SelectItem value="custom-time" className="cursor-pointer">Custom Time</SelectItem>
+                <SelectItem value="Market Open" className="cursor-pointer">
+                  Market Open
+                </SelectItem>
+                <SelectItem value="Market Close" className="cursor-pointer">
+                  Market Close
+                </SelectItem>
+                <SelectItem value="Custom Time" className="cursor-pointer">
+                  Custom Time
+                </SelectItem>
               </SelectContent>
             </Select>
           </Button>
           <DialogFooter>
-            <Button type="submit" className="gradient-blue" onClick={handleSave}>Save changes</Button>
+            <Button
+              type="submit"
+              className="gradient-blue"
+              onClick={handleSave}
+            >
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
