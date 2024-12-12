@@ -54,14 +54,16 @@ export function DropDownPopover({
             <CommandGroup>
               {options.map((option) => (
                 <CommandItem
-                  key={option.value}
-                  value={option.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    onSelect(currentValue); // Notify parent about the selection
-                    setOpen(false);
-                  }}
-                >
+                key={option.value}
+                value={option.value}
+                className="cursor-pointer"
+                onSelect={(currentValue) => {
+                  setValue(currentValue === value ? "" : currentValue);
+                  onSelect(currentValue); // Notify parent about the selection
+                  setOpen(false);
+                }}
+              >
+              
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",

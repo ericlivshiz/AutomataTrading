@@ -28,7 +28,6 @@ import {
 } from "@/components/ui/select";
 
 import NodeMenu from "@/components/NodeMenu";
-import { StockTypeSelect } from "@/components/StockTypeSelect";
 import { DropDownPopover } from "@/components/DropDownPopover";
 
 export type TriggerNodeData = {
@@ -70,6 +69,10 @@ const stockTypes = [
     value: "LLY",
     label: "LLY",
   },  
+  {
+    value: "TSLA",
+    label: "TSLA",
+  }
 ]
 
 const marketTypes = [
@@ -90,9 +93,8 @@ const marketTypes = [
 export default function TriggerNode(data: NodeProps<TriggerNode>) {
   const [open, setOpen] = useState(false);
   const [stockName, setStockName] = useState("Trigger"); // State to hold the stock name
-  const [triggerEvent, setTriggerEvent] = useState(""); // State to hold the trigger event=
   const [updateNode, setUpdateNode] = useState(false);
-  const [marketName, setMarketName] = useState("Trigger"); // State to hold the market name 
+  const [triggerTime, setTriggerTime] = useState("Trigger"); // State to hold the market name 
   const your = "you're";
   const handleSave = () => {
     // Close the dialog after saving changes
@@ -131,7 +133,7 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
               {updateNode ? (
                 <div>
                   <p>Stock: {stockName}</p>
-                  <p>Trigger at: {triggerEvent}</p>
+                  <p>Trigger at: {triggerTime}</p>
                 </div>
               ) : (
                 <div>
@@ -155,7 +157,7 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
           />
           
           <DropDownPopover
-            onSelect={(selectedMarket) => setMarketName(selectedMarket)} 
+            onSelect={(selectedTime) => setTriggerTime(selectedTime)} 
             placeholder="Select Time"
             options={marketTypes}// Pass the selected stock to update the state
           />
