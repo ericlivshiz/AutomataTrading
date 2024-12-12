@@ -29,6 +29,7 @@ import {
 
 import NodeMenu from "@/components/NodeMenu";
 import { StockTypeSelect } from "@/components/StockTypeSelect";
+import { DropDownPopover } from "@/components/DropDownPopover";
 
 export type TriggerNodeData = {
   label?: string;
@@ -36,17 +37,70 @@ export type TriggerNodeData = {
 
 export type TriggerNode = Node<TriggerNodeData>;
 
+const stockTypes = [
+  {
+    value: "APPL",
+    label: "APPL",
+  },
+  {
+    value: "MSFT",
+    label: "MSFT",
+  },
+  {
+    value: "NVDA",
+    label: "NVDA",
+  },
+  {
+    value: "GOOGL",
+    label: "GOOGL",
+  },
+  {
+    value: "AMZN",
+    label: "AMZN",
+  },
+  {
+    value: "META",
+    label: "META",
+  },
+  {
+    value: "BRK.B",
+    label: "BRK.B",
+  },
+  {
+    value: "LLY",
+    label: "LLY",
+  },  
+]
+
+const marketTypes = [
+  {
+    value: "Market Open",
+    label: "Market Open",
+  },
+  {
+    value: "Market Close",
+    label: "Market Close",
+  },
+  {
+    value: "Custom Time",
+    label: "Custom Time",
+  },
+];
+
 export default function TriggerNode(data: NodeProps<TriggerNode>) {
   const [open, setOpen] = useState(false);
-  const [stockName, setStockName] = useState("Select Stock"); // State to hold the stock name
-  const [triggerEvent, setTriggerEvent] = useState("Select Trigger"); // State to hold the trigger event
+  const [stockName, setStockName] = useState("Trigger"); // State to hold the stock name
+  const [triggerEvent, setTriggerEvent] = useState(""); // State to hold the trigger event=
   const [updateNode, setUpdateNode] = useState(false);
+  const [marketName, setMarketName] = useState("Trigger"); // State to hold the market name 
   const your = "you're";
   const handleSave = () => {
     // Close the dialog after saving changes
     setOpen(false);
     setUpdateNode(true);
   };
+
+  
 
   return (
     <div>
@@ -81,7 +135,7 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
                 </div>
               ) : (
                 <div>
-                  <p>Create the trigger needed for this bot.</p>
+                  <p>Create the trigger needed for the bot.</p>
                 </div>
               )}
             </CardContent>
@@ -94,30 +148,17 @@ export default function TriggerNode(data: NodeProps<TriggerNode>) {
           <DialogDescription>
             Create your trigger event here. Click save when {your} done.
           </DialogDescription>
-          <StockTypeSelect
-            onSelect={(selectedStock) => setStockName(selectedStock)} // Pass the selected stock to update the state
+          <DropDownPopover
+            onSelect={(selectedStock) => setStockName(selectedStock)}
+            placeholder="Select Stock"
+            options={stockTypes} // Pass the selected stock to update the state
           />
-          <Button className="flex items-center w-[200px] gradient-blue justify-between border">
-            <p>Trigger at </p>
-            <Select
-              onValueChange={(value) => setTriggerEvent(value)} // Update trigger event state
-            >
-              <SelectTrigger className="shad-select">
-                <SelectValue placeholder="Select Trigger" />
-              </SelectTrigger>
-              <SelectContent className="border-none">
-                <SelectItem value="Market Open" className="cursor-pointer">
-                  Market Open
-                </SelectItem>
-                <SelectItem value="Market Close" className="cursor-pointer">
-                  Market Close
-                </SelectItem>
-                <SelectItem value="Custom Time" className="cursor-pointer">
-                  Custom Time
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </Button>
+          
+          <DropDownPopover
+            onSelect={(selectedMarket) => setMarketName(selectedMarket)} 
+            placeholder="Select Time"
+            options={marketTypes}// Pass the selected stock to update the state
+          />
           <DialogFooter>
             <Button
               type="submit"

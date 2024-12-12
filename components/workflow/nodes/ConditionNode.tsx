@@ -16,11 +16,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
-} from "@/components/ui/dialog"
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 import { useState } from "react";
 import NodeMenu from "@/components/NodeMenu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DropDownPopover } from "@/components/DropDownPopover";
 
 export type ConditionNodeData = {
   label?: string;
@@ -28,14 +36,32 @@ export type ConditionNodeData = {
 
 export type ConditionNode = Node<ConditionNodeData>;
 
+const conditionType = [
+  {
+    value: "Price-Based",
+    label: "Price-Based",
+  },
+  {
+    value: "Technical Indicator",
+    label: "Technical Indicator",
+  },
+  {
+    value: "Time-Based",
+    label: "Time-Based",
+  }
+]
+
 export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
   const [open, setOpen] = useState(false);
+  const [triggerEvent, setTriggerEvent] = useState(""); // State to hold the trigger
+  const [marketkName, setMarketName] = useState("Condition"); // State to hold the stock name
+
   const youre = "you're";
 
   const handleSave = () => {
     // Load the toast, save info to database
     setOpen(false);
-  }
+  };
 
   return (
     <div>
@@ -60,7 +86,6 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
                     <NodeMenu setOpen={setOpen} />
                   </div>
                 </div>
-
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 text-10-regular">
@@ -74,16 +99,47 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
           </DialogHeader>
           <DialogDescription>
             Create your conditions here.Click save when {youre} done.
-            Still getting built!
           </DialogDescription>
+          {/* <Button className="relative flex items-center w-[200px] gradient-blue justify-between border">
+            <p>Trigger at </p>
+            <Select
+              onValueChange={(value) => setTriggerEvent(value)} // Update trigger event state
+            >
+              <SelectTrigger className="shad-select">
+                <SelectValue placeholder="" />
+              </SelectTrigger>
+              <SelectContent className="absolute left-0 mt-2">
+                <SelectItem value="Market Open" className="cursor-pointer">
+                  Market Open
+                </SelectItem>
+                <SelectItem value="Market Close" className="cursor-pointer">
+                  Market Close
+                </SelectItem>
+                <SelectItem value="Custom Time" className="cursor-pointer">
+                  Custom Time
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </Button> */}
+          <DropDownPopover
+            onSelect={(selectedMarket) => setMarketName(selectedMarket)} 
+            placeholder="Select Category"
+            options={conditionType}// Pass the selected stock to update the state
+          />
           <DialogFooter>
-            <Button type="submit" className="gradient-blue" onClick={handleSave}>Save changes</Button>
+            <Button
+              type="submit"
+              className="gradient-blue"
+              onClick={handleSave}
+            >
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Handle type="source" position={Position.Bottom} />
       <Handle type="target" position={Position.Top} />
-    </div >
+    </div>
   );
 }

@@ -19,7 +19,7 @@ import LandingPage from '@/components/landing-page/LandingPage'
 // DEVMODE 0 = WAIT LIST LANDING PAGE
 // DEVMODE 1 = REAL LANDING PAGE
 // DEVMODE 2 = NO LANDING PAGE
-const HOMEPAGEDEVMODE = 0;
+const HOMEPAGEDEVMODE = 1;
 
 const Home = async () => {
   // Instead of redirecting to sign in redirect to landing page.
