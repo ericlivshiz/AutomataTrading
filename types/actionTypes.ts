@@ -4,9 +4,9 @@ export type ActionValue = {
   action: string;
   symbol?: string;
   quantity?: number;
-  price?: number;
   email?: string;
   message?: string;
+  phoneNumber?: string;
 }
 
 export interface ActionInputProps {

@@ -68,13 +68,6 @@ export default function ActionDropdown({ onActionChange }: ActionDropdownProps) 
               onChange={(e) => handleValueChange({ quantity: Number(e.target.value) })}
               className="w-[200px] gradient-blue"
             />
-            <Input
-              type="number"
-              placeholder="Price"
-              value={actionValue.price || ''}
-              onChange={(e) => handleValueChange({ price: Number(e.target.value) })}
-              className="w-[200px] gradient-blue"
-            />
           </div>
         );
 
@@ -98,15 +91,24 @@ export default function ActionDropdown({ onActionChange }: ActionDropdownProps) 
           </div>
         );
 
-      case 'Send Message':
+      case 'Send Text':
         return (
-          <Input
-            type="text"
-            placeholder="Message"
-            value={actionValue.message || ''}
-            onChange={(e) => handleValueChange({ message: e.target.value })}
-            className="w-[200px] gradient-blue"
-          />
+          <div className="flex flex-col space-y-2">
+            <Input
+              type="tel"
+              placeholder="Phone Number"
+              value={actionValue.phoneNumber || ''}
+              onChange={(e) => handleValueChange({ phoneNumber: e.target.value })}
+              className="w-[200px] gradient-blue text-black"
+            />
+            <Input
+              type="text"
+              placeholder="Message"
+              value={actionValue.message || ''}
+              onChange={(e) => handleValueChange({ message: e.target.value })}
+              className="w-[200px] gradient-blue text-black"
+            />
+          </div>
         );
 
       default:
@@ -117,13 +119,13 @@ export default function ActionDropdown({ onActionChange }: ActionDropdownProps) 
   const getDisplayText = () => {
     if (!selectedAction) return 'Select Action';
     
-    const { action, symbol, quantity, price, email, message } = actionValue;
+    const { action, symbol, quantity, email, message, phoneNumber } = actionValue;
 
     switch (action) {
       case 'Place Buy Order':
       case 'Place Sell Order':
-        if (symbol && quantity && price) {
-          return `${action}: ${symbol} x${quantity} @$${price}`;
+        if (symbol && quantity) {
+          return `${action}: ${symbol} x${quantity}`;
         }
         return action;
       case 'Send Email':
@@ -131,9 +133,9 @@ export default function ActionDropdown({ onActionChange }: ActionDropdownProps) 
           return `${action} to ${email}`;
         }
         return action;
-      case 'Send Message':
-        if (message) {
-          return `${action}: ${message.slice(0, 20)}${message.length > 20 ? '...' : ''}`;
+      case 'Send Text':
+        if (phoneNumber && message) {
+          return `${action} to ${phoneNumber}`;
         }
         return action;
       default:

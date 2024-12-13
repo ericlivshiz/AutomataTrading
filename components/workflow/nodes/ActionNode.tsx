@@ -49,13 +49,13 @@ export default function ActionNode({ data, id }: NodeProps<ActionNode>) {
       return 'Action';
     }
 
-    const { action, symbol, quantity, price, email, message } = actionDetails;
+    const { action, symbol, quantity, email, message, phoneNumber } = actionDetails;
 
     switch (action) {
       case 'Place Buy Order':
       case 'Place Sell Order':
-        if (symbol && quantity && price) {
-          return `${action}: ${symbol} x${quantity} @$${price}`;
+        if (symbol && quantity) {
+          return `${action}: ${symbol} x${quantity}`;
         }
         return action;
       case 'Send Email':
@@ -63,9 +63,9 @@ export default function ActionNode({ data, id }: NodeProps<ActionNode>) {
           return `${action} to ${email}`;
         }
         return action;
-      case 'Send Message':
-        if (message) {
-          return `${action}: ${message.slice(0, 20)}${message.length > 20 ? '...' : ''}`;
+      case 'Send Text':
+        if (phoneNumber && message) {
+          return `${action} to ${phoneNumber}`;
         }
         return action;
       default:

@@ -5,6 +5,6 @@ export const actionTypes = {
   ],
   'Notifications': [
     'Send Email',
-    'Send Message',
+    'Send Text',
   ],
 } as const; 
