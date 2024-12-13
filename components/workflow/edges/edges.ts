@@ -1,16 +1,14 @@
 import type { BuiltInEdge, Edge, EdgeTypes } from "@xyflow/react";
 
-import ButtonEdge, { type ButtonEdge as ButtonEdgeType } from "./ButtonEdge";
+import MenuEdge, { type MenuEdge as MenuEdgeType } from "./MenuEdge";
 
 export const initialEdges = [
-  { id: "a->b", source: "a", target: "b", animated: true, type: "button-edge" },
-  { id: "b->c", source: "b", target: "c", animated: true, type: "button-edge" },
+  { id: "a->b", source: "a", target: "b", type: "menuEdge", animated: true },
+  { id: "b->c", source: "b", target: "c", type: "menuEdge", animated: true },
 ] satisfies Edge[];
 
 export const edgeTypes = {
-  // Add your custom edge types here!
-  "button-edge": ButtonEdge,
+  menuEdge: MenuEdge,
 } satisfies EdgeTypes;
 
-// Append the types of you custom edges to the BuiltInEdge type
-export type CustomEdgeType = BuiltInEdge | ButtonEdgeType;
+export type CustomEdgeType = BuiltInEdge | MenuEdgeType;

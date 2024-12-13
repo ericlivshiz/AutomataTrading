@@ -21,15 +21,8 @@ import {
 
 import { useState } from "react";
 import NodeMenu from "@/components/NodeMenu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DropDownPopover } from "@/components/DropDownPopover";
 import StockConditionDropdown from "@/components/StockConditionDropdown";
+import { StockConditionValue } from "@/types/stockConditions";
 
 export type ConditionNodeData = {
   label?: string;
@@ -37,79 +30,54 @@ export type ConditionNodeData = {
 
 export type ConditionNode = Node<ConditionNodeData>;
 
-const categoryType = [
-  {
-    value: "Price-Based",
-    label: "Price-Based",
-  },
-  {
-    value: "Technical Indicator",
-    label: "Technical Indicator",
-  },
-  {
-    value: "Time-Based",
-    label: "Time-Based",
-  }
-]
-
-const conditionType = [
-  {
-    value: "Price Above",
-    label: "Price Above",
-  },
-  {
-    value: "Price Below",
-    label: "Price Below",
-  },
-  {
-    value: "Price Crosses Above",
-    label: "Price Crosses Above",
-  },
-  {
-    value: "Price Crosses Below",
-    label: "Price Crosses Below",
-  },
-  {
-    value: "RSI Above",
-    label: "RSI Above",
-  },
-  {
-    value: "RSI Below",
-    label: "RSI Below",
-  },
-  {
-    value: "MACD Above",
-    label: "MACD Above",
-  },
-  {
-    value: "MACD Below",
-    label: "MACD Below",
-  },
-  {
-    value: "Market Open",
-    label: "Market Open",
-  },
-  {
-    value: "Market Close",
-    label: "Market Close",
-  },
-  {
-    value: "Custom Time",
-    label: "Custom Time",
-  }
-]
-
-export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
+export default function ConditionNode({ data, id }: NodeProps<ConditionNode>) {
   const [open, setOpen] = useState(false);
-  const [triggerEvent, setTriggerEvent] = useState(""); // State to hold the trigger
-  const [marketkName, setMarketName] = useState("Condition"); // State to hold the stock name
-  const [selectedCategoryType, setSelectedCategoryType] = useState("");
-
+  const [conditionDetails, setConditionDetails] = useState<StockConditionValue>({ condition: 'Condition' });
+  const [updateNode, setUpdateNode] = useState(false);
   const youre = "you're";
 
   const handleSave = () => {
-    // Load the toast, save info to database
+    setUpdateNode(true);
     setOpen(false);
+  };
+
+  const handleConditionChange = (details: StockConditionValue) => {
+    setConditionDetails(details);
+  };
+
+  const getDisplayText = () => {
+    if (!conditionDetails.condition || conditionDetails.condition === 'Condition') {
+      return 'Condition';
+    }
+
+    const { condition, value, value2, dateRange } = conditionDetails;
+
+    if (!value && !dateRange) return condition;
+
+    switch (condition) {
+      case 'Above Price':
+      case 'Below Price':
+        return `${condition} $${value}`;
+      case 'Price Change %':
+        return `${condition} ${value}%`;
+      case 'Price Range':
+        return value2 ? `${condition} $${value} - $${value2}` : condition;
+      case 'Moving Average':
+      case 'RSI':
+      case 'Bollinger Bands':
+        return `${condition} Period: ${value}`;
+      case 'MACD':
+        return value2 ? `${condition} Fast: ${value}, Slow: ${value2}` : condition;
+      case 'Date Range':
+        if (dateRange?.from && dateRange?.to) {
+          const fromDate = dateRange.from.toLocaleDateString();
+          const toDate = dateRange.to.toLocaleDateString();
+          return `${condition}: ${fromDate} - ${toDate}`;
+        }
+        return condition;
+      default:
+        return condition;
+    }
   };
 
   return (
@@ -128,17 +96,21 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
                       height={15}
                     />
                     <p className="ml-1 hidden sm:block text-black text-xs font-medium">
-                      Condition
+                      {getDisplayText()}
                     </p>
                   </div>
                   <div className="w-fit">
-                    <NodeMenu setOpen={setOpen} />
+                    <NodeMenu setOpen={setOpen} nodeId={id} />
                   </div>
                 </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 text-10-regular">
-              <p>Create the conditions needed for the bot.</p>
+              {updateNode ? (
+                <p>Condition: {getDisplayText()}</p>
+              ) : (
+                <p>Create the conditions needed for the bot.</p>
+              )}
             </CardContent>
           </Card>
         </DialogTrigger>
@@ -147,14 +119,9 @@ export default function ConditionNode({ data }: NodeProps<ConditionNode>) {
             <DialogTitle>Condition Menu</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Create your conditions here.Click save when {youre} done.
+            Create your conditions here. Click save when {youre} done.
           </DialogDescription>
-          {/* <DropDownPopover
-            onSelect={(selectedMarket) => setMarketName(selectedMarket)} 
-            placeholder="Select Condition"
-            options={categoryType}
-          /> */}
-          <StockConditionDropdown />
+          <StockConditionDropdown onConditionChange={handleConditionChange} />
           <DialogFooter>
             <Button
               type="submit"

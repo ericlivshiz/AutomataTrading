@@ -14,9 +14,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DateRangeButton() {
+interface DateRangeButtonProps {
+  onSelect?: (range: DateRange) => void;
+}
+
+export function DateRangeButton({ onSelect }: DateRangeButtonProps) {
     const [date, setDate] = React.useState<DateRange | undefined>()
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false)
+  
+    const handleSelect = (range: DateRange | undefined) => {
+      if (range) {
+        setDate(range);
+        onSelect?.(range);
+      }
+    };
   
     return (
       <Popover
@@ -52,7 +63,7 @@ export function DateRangeButton() {
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={handleSelect}
             numberOfMonths={2}
           />
         </PopoverContent>

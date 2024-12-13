@@ -21,28 +21,28 @@ import Comments from "../Comments";
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@radix-ui/react-label";
 
-
 export default function Flow() {
     const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeType>(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState<CustomEdgeType>(initialEdges);
-    useEdgesState<CustomEdgeType>(initialEdges);
+    
     const onConnect: OnConnect = useCallback(
-        (connection) => setEdges((edges) => addEdge(connection, edges)),
+        (connection) => setEdges((edges) => addEdge({ ...connection, type: 'menuEdge' }, edges)),
         [setEdges]
     );
 
     return (
         <div style={{ width: '100vw', height: '100vh' }}>
-            <ReactFlow<CustomNodeType, CustomEdgeType>
-                colorMode="dark"
+            <ReactFlow
                 nodes={nodes}
-                nodeTypes={nodeTypes}
-                onNodesChange={onNodesChange}
                 edges={edges}
+                nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
+                onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 fitView
+                defaultEdgeOptions={{ type: 'menuEdge' }}
+                colorMode="dark"
             >
                 <Panel position="top-right">
                     <div className="flex items-center space-x-2">
@@ -55,6 +55,5 @@ export default function Flow() {
                 <Controls />
             </ReactFlow>
         </div>
-
     );
 }
