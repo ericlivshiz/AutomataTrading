@@ -86,14 +86,14 @@ export default function ActionDropdown({ onActionChange }: ActionDropdownProps) 
               placeholder="Email Address"
               value={actionValue.email || ''}
               onChange={(e) => handleValueChange({ email: e.target.value })}
-              className="w-[200px] gradient-blue"
+              className="w-[200px] gradient-blue text-black"
             />
             <Input
               type="text"
               placeholder="Message"
               value={actionValue.message || ''}
               onChange={(e) => handleValueChange({ message: e.target.value })}
-              className="w-[200px] gradient-blue"
+              className="w-[200px] gradient-blue text-black"
             />
           </div>
         );

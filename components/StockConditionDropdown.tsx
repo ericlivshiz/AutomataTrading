@@ -20,6 +20,9 @@ import { RangeInputs } from './condition-inputs/RangeInputs'
 import { stockConditions } from '@/data/stockConditions'
 import { StockConditionValue } from '@/types/stockConditions'
 import { DateRange } from "react-day-picker";
+import { SpecificDateButton } from './SpecificDateButton';
+import { TimeOfDayInput } from './condition-inputs/TimeOfDayInput';
+import { DayOfWeekInput } from './condition-inputs/DayOfWeekInput';
 
 interface StockConditionDropdownProps {
   onConditionChange?: (value: StockConditionValue) => void;
@@ -104,6 +107,33 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
           />
         );
 
+      case 'Specific Date':
+        return (
+          <SpecificDateButton 
+            onSelect={(selectedDate) => {
+              handleValueChange({ 
+                specificDate: selectedDate 
+              });
+            }} 
+          />
+        );
+
+      case 'Time of Day':
+        return (
+          <TimeOfDayInput
+            value={conditionValue.value?.toString()}
+            onSelect={(time) => handleValueChange({ value: time })}
+          />
+        );
+
+      case 'Day of Week':
+        return (
+          <DayOfWeekInput
+            value={conditionValue.value?.toString()}
+            onSelect={(day) => handleValueChange({ value: day })}
+          />
+        );
+
       default:
         return null;
     }
@@ -112,9 +142,9 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
   const getDisplayText = () => {
     if (!selectedCondition) return 'Select Condition';
     
-    const { value, value2, dateRange } = conditionValue;
+    const { value, value2, dateRange, specificDate } = conditionValue;
     
-    if (!value && !dateRange) return selectedCondition;
+    if (!value && !dateRange && !specificDate) return selectedCondition;
 
     switch (selectedCondition) {
       case 'Above Price':
@@ -137,6 +167,15 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
           return `${selectedCondition}: ${fromDate} - ${toDate}`;
         }
         return selectedCondition;
+      case 'Specific Date':
+        if (specificDate) {
+          return `${selectedCondition}: ${specificDate.toLocaleDateString()}`;
+        }
+        return selectedCondition;
+      case 'Time of Day':
+        return value ? `${selectedCondition}: ${value}` : selectedCondition;
+      case 'Day of Week':
+        return value ? `${selectedCondition}: ${value}` : selectedCondition;
       default:
         return selectedCondition;
     }

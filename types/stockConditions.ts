@@ -8,6 +8,7 @@ export type StockConditionValue = {
     from: Date;
     to: Date;
   };
+  specificDate?: Date;
 }
 
 export interface ConditionInputProps {

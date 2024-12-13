@@ -50,9 +50,9 @@ export default function ConditionNode({ data, id }: NodeProps<ConditionNode>) {
       return 'Condition';
     }
 
-    const { condition, value, value2, dateRange } = conditionDetails;
+    const { condition, value, value2, dateRange, specificDate } = conditionDetails;
 
-    if (!value && !dateRange) return condition;
+    if (!value && !dateRange && !specificDate) return condition;
 
     switch (condition) {
       case 'Above Price':
@@ -68,11 +68,20 @@ export default function ConditionNode({ data, id }: NodeProps<ConditionNode>) {
         return `${condition} Period: ${value}`;
       case 'MACD':
         return value2 ? `${condition} Fast: ${value}, Slow: ${value2}` : condition;
+      case 'Time of Day':
+        return value ? `${condition}: ${value}` : condition;
+      case 'Day of Week':
+        return value ? `${condition}: ${value}` : condition;
       case 'Date Range':
         if (dateRange?.from && dateRange?.to) {
           const fromDate = dateRange.from.toLocaleDateString();
           const toDate = dateRange.to.toLocaleDateString();
           return `${condition}: ${fromDate} - ${toDate}`;
+        }
+        return condition;
+      case 'Specific Date':
+        if (specificDate) {
+          return `${condition}: ${specificDate.toLocaleDateString()}`;
         }
         return condition;
       default:

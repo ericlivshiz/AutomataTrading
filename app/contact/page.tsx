@@ -41,7 +41,7 @@ const Contact = () => {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    className="w-full p-4 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full p-4 bg-gray-700 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     placeholder="John Doe"
                                     required
                                 />
@@ -54,7 +54,7 @@ const Contact = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full p-4 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full p-4 bg-gray-700 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     placeholder="you@example.com"
                                     required
                                 />
@@ -67,14 +67,14 @@ const Contact = () => {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleInputChange}
-                                className="w-full p-4 h-40 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full p-4 h-40 bg-gray-700 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 placeholder="Write your message here..."
                                 required
                             />
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-md transition duration-300">
+                            className="w-full bg-indigo-500 hover:bg-indigo-600 text-black py-3 rounded-md transition duration-300">
                             Send Message
                         </button>
                     </form>
