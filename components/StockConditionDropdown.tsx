@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -25,24 +25,34 @@ import { TimeOfDayInput } from './condition-inputs/TimeOfDayInput';
 import { DayOfWeekInput } from './condition-inputs/DayOfWeekInput';
 
 interface StockConditionDropdownProps {
-  onConditionChange?: (value: StockConditionValue) => void;
+  onConditionChange?: (value: StockConditionValue[]) => void;
 }
 
 export default function StockConditionDropdown({ onConditionChange }: StockConditionDropdownProps) {
+  const [conditions, setConditions] = React.useState<StockConditionValue[]>([]);
+  const [isAddingCondition, setIsAddingCondition] = React.useState(false);
   const [selectedCondition, setSelectedCondition] = React.useState<string | null>(null);
-  const [conditionValue, setConditionValue] = React.useState<StockConditionValue>({ condition: '' });
+  const [currentConditionValue, setCurrentConditionValue] = React.useState<StockConditionValue>({ condition: '' });
 
   const handleConditionSelect = (condition: string) => {
     setSelectedCondition(condition);
-    const newValue = { condition };
-    setConditionValue(newValue);
-    onConditionChange?.(newValue);
+    setCurrentConditionValue({ condition });
   };
 
   const handleValueChange = (newValue: Partial<StockConditionValue>) => {
-    const updatedValue = { ...conditionValue, ...newValue };
-    setConditionValue(updatedValue);
-    onConditionChange?.(updatedValue);
+    const updatedValue = { ...currentConditionValue, ...newValue };
+    setCurrentConditionValue(updatedValue);
+  };
+
+  const handleAddCondition = () => {
+    if (currentConditionValue.condition) {
+      const newConditions = [...conditions, currentConditionValue];
+      setConditions(newConditions);
+      onConditionChange?.(newConditions);
+      setIsAddingCondition(false);
+      setSelectedCondition(null);
+      setCurrentConditionValue({ condition: '' });
+    }
   };
 
   const renderConditionInput = () => {
@@ -53,7 +63,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'Below Price':
         return (
           <PriceInput
-            value={conditionValue.value?.toString() || ''}
+            value={currentConditionValue.value?.toString() || ''}
             onChange={(e) => handleValueChange({ value: e.target.value })}
           />
         );
@@ -61,7 +71,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'Price Change %':
         return (
           <PriceInput
-            value={conditionValue.value?.toString() || ''}
+            value={currentConditionValue.value?.toString() || ''}
             onChange={(e) => handleValueChange({ value: e.target.value })}
             className="w-[100px]"
           />
@@ -71,8 +81,8 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'MACD':
         return (
           <RangeInputs
-            minValue={conditionValue.value?.toString() || ''}
-            maxValue={conditionValue.value2?.toString() || ''}
+            minValue={currentConditionValue.value?.toString() || ''}
+            maxValue={currentConditionValue.value2?.toString() || ''}
             onMinChange={(e) => handleValueChange({ value: e.target.value })}
             onMaxChange={(e) => handleValueChange({ value2: e.target.value })}
             minPlaceholder={selectedCondition === 'MACD' ? 'Fast' : 'Min Price'}
@@ -85,7 +95,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'Bollinger Bands':
         return (
           <PriceInput
-            value={conditionValue.value?.toString() || ''}
+            value={currentConditionValue.value?.toString() || ''}
             onChange={(e) => handleValueChange({ value: e.target.value })}
             className="w-[100px]"
           />
@@ -121,7 +131,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'Time of Day':
         return (
           <TimeOfDayInput
-            value={conditionValue.value?.toString()}
+            value={currentConditionValue.value?.toString()}
             onSelect={(time) => handleValueChange({ value: time })}
           />
         );
@@ -129,7 +139,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
       case 'Day of Week':
         return (
           <DayOfWeekInput
-            value={conditionValue.value?.toString()}
+            value={currentConditionValue.value?.toString()}
             onSelect={(day) => handleValueChange({ value: day })}
           />
         );
@@ -139,84 +149,143 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
     }
   };
 
-  const getDisplayText = () => {
-    if (!selectedCondition) return 'Select Condition';
+  const getDisplayText = (condition: StockConditionValue) => {
+    if (!condition.condition) return 'Select Condition';
     
-    const { value, value2, dateRange, specificDate } = conditionValue;
+    const { condition: conditionType, value, value2, dateRange, specificDate } = condition;
     
-    if (!value && !dateRange && !specificDate) return selectedCondition;
+    if (!value && !dateRange && !specificDate) return conditionType;
 
-    switch (selectedCondition) {
+    switch (conditionType) {
       case 'Above Price':
       case 'Below Price':
-        return `${selectedCondition} $${value}`;
+        return `${conditionType} $${value}`;
       case 'Price Change %':
-        return `${selectedCondition} ${value}%`;
+        return `${conditionType} ${value}%`;
       case 'Price Range':
-        return value2 ? `${selectedCondition} $${value} - $${value2}` : selectedCondition;
+        return value2 ? `${conditionType} $${value} - $${value2}` : conditionType;
       case 'Moving Average':
       case 'RSI':
       case 'Bollinger Bands':
-        return `${selectedCondition} Period: ${value}`;
+        return `${conditionType} Period: ${value}`;
       case 'MACD':
-        return value2 ? `${selectedCondition} Fast: ${value}, Slow: ${value2}` : selectedCondition;
+        return value2 ? `${conditionType} Fast: ${value}, Slow: ${value2}` : conditionType;
       case 'Date Range':
         if (dateRange?.from && dateRange?.to) {
           const fromDate = dateRange.from.toLocaleDateString();
           const toDate = dateRange.to.toLocaleDateString();
-          return `${selectedCondition}: ${fromDate} - ${toDate}`;
+          return `${conditionType}: ${fromDate} - ${toDate}`;
         }
-        return selectedCondition;
+        return conditionType;
       case 'Specific Date':
         if (specificDate) {
-          return `${selectedCondition}: ${specificDate.toLocaleDateString()}`;
+          return `${conditionType}: ${specificDate.toLocaleDateString()}`;
         }
-        return selectedCondition;
+        return conditionType;
       case 'Time of Day':
-        return value ? `${selectedCondition}: ${value}` : selectedCondition;
+        return value ? `${conditionType}: ${value}` : conditionType;
       case 'Day of Week':
-        return value ? `${selectedCondition}: ${value}` : selectedCondition;
+        return value ? `${conditionType}: ${value}` : conditionType;
       default:
-        return selectedCondition;
+        return conditionType;
     }
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="w-[200px] gradient-blue justify-between">
-            {getDisplayText()}
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 gradient-blue border-none">
-          <DropdownMenuGroup>
-            {Object.entries(stockConditions).map(([category, conditions]) => (
-              <DropdownMenuSub key={category}>
-                <DropdownMenuSubTrigger className="cursor-pointer">
-                  <span>{category}</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent className="w-56 gradient-blue border-none">
-                    {conditions.map((condition) => (
-                      <DropdownMenuItem
-                        key={condition}
-                        onSelect={() => handleConditionSelect(condition)}
-                        className="cursor-pointer"
-                      >
-                        <span>{condition}</span>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-            ))}
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      {renderConditionInput()}
+    <div className="space-y-4">
+      {/* List of Current Conditions */}
+      <div className="space-y-2">
+        {conditions.length === 0 ? (
+          <div className="text-sm text-gray-200 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 p-3 rounded-md shadow-md">
+            You have no current conditions
+          </div>
+        ) : (
+          conditions.map((condition, index) => (
+            <div
+              key={index}
+              className="p-3 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 rounded-md text-gray-200 shadow-md"
+            >
+              {getDisplayText(condition)}
+            </div>
+          ))
+        )}
+      </div>
+  
+      {/* Add Condition Button or Condition Selection */}
+      {!isAddingCondition ? (
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+          onClick={() => setIsAddingCondition(true)}
+        >
+          <Plus className="h-4 w-4" />
+          Add Condition
+        </Button>
+      ) : (
+        <div className="space-y-2 p-3 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 rounded-md shadow-md">
+          <div className="flex items-center space-x-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-[200px] bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 text-gray-200 shadow-md justify-between"
+                >
+                  {selectedCondition || 'Select Condition'}
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-gradient-to-r from-gray-800 to-gray-900 text-gray-200 border-none shadow-md">
+                <DropdownMenuGroup>
+                  {Object.entries(stockConditions).map(([category, conditions]) => (
+                    <DropdownMenuSub key={category}>
+                      <DropdownMenuSubTrigger className="cursor-pointer text-gray-200">
+                        <span>{category}</span>
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent className="w-56 bg-gradient-to-r from-gray-800 to-gray-900 text-gray-200 border-none shadow-md">
+                          {conditions.map((condition) => (
+                            <DropdownMenuItem
+                              key={condition}
+                              onSelect={() => handleConditionSelect(condition)}
+                              className="cursor-pointer text-gray-200 hover:bg-gray-700"
+                            >
+                              <span>{condition}</span>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+  
+            {renderConditionInput()}
+          </div>
+  
+          <div className="flex space-x-2">
+            <Button
+              variant="outline"
+              className="flex-1 bg-gradient-to-r from-gray-700 to-gray-800 text-red-500 hover:from-red-400 hover:to-red-500 shadow-md"
+              onClick={() => {
+                setIsAddingCondition(false);
+                setSelectedCondition(null);
+                setCurrentConditionValue({ condition: '' });
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="default"
+              className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+              onClick={handleAddCondition}
+              disabled={!currentConditionValue.condition}
+            >
+              Add
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+}  
