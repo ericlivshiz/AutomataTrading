@@ -15,10 +15,32 @@ interface NodeMenuProps {
 }
 
 const NodeMenu = ({ setOpen, nodeId }: NodeMenuProps) => {
-    const { setNodes, setEdges } = useReactFlow();
+    const { setNodes, setEdges, getNode } = useReactFlow();
 
     const hideSelector = (e: React.MouseEvent) => {
       e.stopPropagation();  // This stops the event from reaching the DialogTrigger
+      setOpen(false);
+    };
+
+    const handleDuplicate = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      
+      const originalNode = getNode(nodeId);
+      if (!originalNode) return;
+
+      // Create a new node based on the original
+      const newNode = {
+        ...originalNode,
+        id: `${originalNode.type}-${Math.random()}`,
+        position: {
+          x: originalNode.position.x + 50,
+          y: originalNode.position.y + 50,
+        },
+        data: { ...originalNode.data },
+        selected: false,
+      };
+
+      setNodes((nodes) => [...nodes, newNode]);
       setOpen(false);
     };
 
@@ -50,7 +72,7 @@ const NodeMenu = ({ setOpen, nodeId }: NodeMenuProps) => {
         <DropdownMenuContent>
           <DropdownMenuLabel onClick={hideSelector}>Settings</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={hideSelector} className="cursor-pointer">Duplicate</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleDuplicate} className="cursor-pointer">Duplicate</DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete} className="cursor-pointer text-red-500">Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
