@@ -14,8 +14,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { MarketTypeList } from './MarketTypeList';
 
 
@@ -48,13 +46,6 @@ const AddWorkflowBtn = ({ userId, email }: AddWorkflowBtnProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                {/* <Button type="submit" onClick={addWorkflowHandler} className="gradient-blue flex gap-1 shadow-md">
-                    <Image
-                        src="/assets/icons/add.svg" alt="add" width={24} height={24}
-                    />
-                    <p className="hidden sm:block"> Start a New Workflow</p>
-                </Button> */}
-
                 <Button className="gradient-blue flex gap-1 shadow-md">
                     <Image
                         src="/assets/icons/add.svg" alt="add" width={24} height={24}

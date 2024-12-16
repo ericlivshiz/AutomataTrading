@@ -23,13 +23,24 @@ import { DateRange } from "react-day-picker";
 import { SpecificDateButton } from './SpecificDateButton';
 import { TimeOfDayInput } from './condition-inputs/TimeOfDayInput';
 import { DayOfWeekInput } from './condition-inputs/DayOfWeekInput';
+import { Switch } from "@/components/ui/switch"
 
 interface StockConditionDropdownProps {
   onConditionChange?: (value: StockConditionValue[]) => void;
 }
 
+interface ConditionOperator {
+  isAnd: boolean;
+}
+
+interface ConditionGroup {
+  id: number;
+  conditions: (StockConditionValue | ConditionOperator)[];
+  isAnd: boolean;
+}
+
 export default function StockConditionDropdown({ onConditionChange }: StockConditionDropdownProps) {
-  const [conditions, setConditions] = React.useState<StockConditionValue[]>([]);
+  const [groups, setGroups] = React.useState<ConditionGroup[]>([]);
   const [isAddingCondition, setIsAddingCondition] = React.useState(false);
   const [selectedCondition, setSelectedCondition] = React.useState<string | null>(null);
   const [currentConditionValue, setCurrentConditionValue] = React.useState<StockConditionValue>({ condition: '' });
@@ -44,15 +55,49 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
     setCurrentConditionValue(updatedValue);
   };
 
-  const handleAddCondition = () => {
+  const handleOperatorChange = (groupId: number, index: number, isAnd: boolean) => {
+    const newGroups = groups.map(group => {
+      if (group.id === groupId) {
+        const newConditions = [...group.conditions];
+        (newConditions[index] as ConditionOperator).isAnd = isAnd;
+        return { ...group, conditions: newConditions };
+      }
+      return group;
+    });
+    setGroups(newGroups);
+    onConditionChange?.(newGroups.flatMap(group => group.conditions.filter((item): item is StockConditionValue => 'condition' in item)));
+  };
+
+  const handleGroupOperatorChange = (index: number, isAnd: boolean) => {
+    const newGroups = [...groups];
+    newGroups[index].isAnd = isAnd;
+    setGroups(newGroups);
+  };
+
+  const handleAddCondition = (groupId: number) => {
     if (currentConditionValue.condition) {
-      const newConditions = [...conditions, currentConditionValue];
-      setConditions(newConditions);
-      onConditionChange?.(newConditions);
+      const newGroups = groups.map(group => {
+        if (group.id === groupId) {
+          const newConditions = [...group.conditions];
+          if (newConditions.length > 0) {
+            newConditions.push({ isAnd: true });
+          }
+          newConditions.push(currentConditionValue);
+          return { ...group, conditions: newConditions };
+        }
+        return group;
+      });
+      setGroups(newGroups);
+      onConditionChange?.(newGroups.flatMap(group => group.conditions.filter((item): item is StockConditionValue => 'condition' in item)));
       setIsAddingCondition(false);
       setSelectedCondition(null);
       setCurrentConditionValue({ condition: '' });
     }
+  };
+
+  const handleAddGroup = () => {
+    const newGroupId = groups.length + 1;
+    setGroups([...groups, { id: newGroupId, conditions: [], isAnd: true }]);
   };
 
   const renderConditionInput = () => {
@@ -193,35 +238,87 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
 
   return (
     <div className="space-y-4">
-      {/* List of Current Conditions */}
-      <div className="space-y-2">
-        {conditions.length === 0 ? (
+      {/* List of Current Groups and Conditions */}
+      <div className="space-y-4">
+        {groups.length === 0 ? (
           <div className="text-sm text-gray-200 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 p-3 rounded-md shadow-md">
             You have no current conditions
           </div>
         ) : (
-          conditions.map((condition, index) => (
-            <div
-              key={index}
-              className="p-3 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 rounded-md text-gray-200 shadow-md"
-            >
-              {getDisplayText(condition)}
-            </div>
+          groups.map((group, groupIndex) => (
+            <React.Fragment key={group.id}>
+              <div className="p-3 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 rounded-md text-gray-200 shadow-md">
+                <div className="font-bold mb-2">Group {group.id}</div>
+                {group.conditions.map((item, index) => {
+                  if ('condition' in item) {
+                    return (
+                      <div
+                        key={index}
+                        className="p-2 bg-gray-800 rounded-md text-gray-200 shadow-sm"
+                      >
+                        {getDisplayText(item)}
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div key={index} className="flex items-center justify-center py-2 space-x-3">
+                        <span className={`text-sm ${item.isAnd ? 'text-gray-400' : 'text-gray-200'}`}>OR</span>
+                        <Switch
+                          checked={item.isAnd}
+                          onCheckedChange={(checked) => handleOperatorChange(group.id, index, checked)}
+                          className="bg-gradient-to-r from-gray-700 to-gray-800"
+                        />
+                        <span className={`text-sm ${item.isAnd ? 'text-gray-200' : 'text-gray-400'}`}>AND</span>
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              {groupIndex < groups.length - 1 && (
+                <div className="flex items-center justify-center py-2 space-x-3">
+                  <span className={`text-sm ${group.isAnd ? 'text-gray-400' : 'text-gray-200'}`}>OR</span>
+                  <Switch
+                    checked={group.isAnd}
+                    onCheckedChange={(checked) => handleGroupOperatorChange(groupIndex, checked)}
+                    className="bg-gradient-to-r from-gray-700 to-gray-800"
+                  />
+                  <span className={`text-sm ${group.isAnd ? 'text-gray-200' : 'text-gray-400'}`}>AND</span>
+                </div>
+              )}
+            </React.Fragment>
           ))
         )}
       </div>
   
-      {/* Add Condition Button or Condition Selection */}
-      {!isAddingCondition ? (
-        <Button
-          variant="outline"
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
-          onClick={() => setIsAddingCondition(true)}
-        >
-          <Plus className="h-4 w-4" />
-          Add Condition
-        </Button>
-      ) : (
+      {/* Add Group and Condition Buttons */}
+      {!isAddingCondition && (
+        <div className="flex space-x-2">
+          <Button
+            variant="outline"
+            className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+            onClick={handleAddGroup}
+          >
+            <Plus className="h-4 w-4" />
+            Add Group
+          </Button>
+          <Button
+            variant="outline"
+            className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+            onClick={() => {
+              if (groups.length === 0) {
+                handleAddGroup();
+              }
+              setIsAddingCondition(true);
+            }}
+          >
+            <Plus className="h-4 w-4" />
+            Add Condition
+          </Button>
+        </div>
+      )}
+  
+      {/* Condition Selection */}
+      {isAddingCondition && (
         <div className="space-y-2 p-3 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 rounded-md shadow-md">
           <div className="flex items-center space-x-2">
             <DropdownMenu>
@@ -278,7 +375,7 @@ export default function StockConditionDropdown({ onConditionChange }: StockCondi
             <Button
               variant="default"
               className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
-              onClick={handleAddCondition}
+              onClick={() => handleAddCondition(groups[groups.length - 1].id)}
               disabled={!currentConditionValue.condition}
             >
               Add
